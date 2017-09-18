@@ -20,7 +20,7 @@ public class TaxCalculator {
          System.out.print(" "+itm.getQuantity()+itm.getQtyDenote()+" =");
          System.out.print(itm.getQuantity()*itm.getPrice()+" + "+"CGST"+" = ");
          System.out.print(itm.getTax()+"%"+" + "+"SGST"+" = "+itm.getTax()+" = ");
-         double final_cost=itm.getQuantity()*itm.getPrice()*(1-(2*itm.getTax())/(itm.getQuantity()*itm.getPrice()));
+         double final_cost=itm.getQuantity()*itm.getPrice()*1+(2*itm.getTax())/(itm.getQuantity()*itm.getPrice())*100;
          sum=sum+final_cost;
          System.out.print(final_cost);
          System.out.println("");
