@@ -51,7 +51,7 @@ public class MainDriver {
             System.out.println("1. Add Device");
             System.out.println("2. Select Device");
             System.out.println("3. Add Storage");
-            System.out.println("4. Select Storage";)
+            System.out.println("4. Select Storage");
             System.out.println("5. Exit");
             System.out.println("Select your option");
             int choice = Integer.parseInt(buffer.readLine());
@@ -73,13 +73,13 @@ public class MainDriver {
                             System.out.println("Select a valid option");
                             continue;
                         }
-                        System.out.print("Enter processor Name");
+                        System.out.println("Enter processor Name");
                         String processorName = buffer.readLine();
-                        System.out.print("Enter Ram Size");
+                        System.out.println("Enter Ram Size");
                         int RAM = Integer.parseInt(buffer.readLine());
-                        System.out.print("Enter motherboard Name");
+                        System.out.println("Enter motherboard Name");
                         String motherboardName = buffer.readLine();
-                        System.out.print("Enter Storage size in bytes");
+                        System.out.println("Enter Storage size in bytes");
                         int space = Integer.parseInt(buffer.readLine());
                         if(choice1 == 1){
                             user.addDevice(1,processorName,RAM,motherboardName,space,0);
@@ -104,11 +104,27 @@ public class MainDriver {
                     break;
 
                 case 3:
-
+                    System.out.println("Select storage type");
+                    System.out.println("1. USB");
+                    System.out.println("2. External HDD");
+                    int choice1 = Integer.parseInt(buffer.readLine());
+                    System.out.println("Enter capacity in Bytes");
+                    int capacity = Integer.parseInt(buffer.readLine());
+                    if(choice1 == 1){
+                        user.addStorage(choice1,capacity);
+                    }
+                    else if(choice1 == 2){
+                        user.addStorage(choice1,capacity);
+                    }
+                    else{
+                        System.out.println("Select a valid choice");
+                    }
                     break;
 
                 case 4:
-
+                    System.out.println("Enter the id of the storage device");
+                    int storageId = Integer.parseInt(buffer.readLine());
+                    showStorageMenu(user, storageId);
                     break;
 
                 case 5:
@@ -123,7 +139,65 @@ public class MainDriver {
         }
     }
 
-    public static void showDeviceMenu(User user,int id){
+    public static void showStorageMenu(User user,int id) throws IOException{
+        RemovableDevice removableDevice = user.getStorageDevice(id);
+        if(removableDevice == null){
+            System.out.println("No such device exists");
+            return;
+        }
+        while(true){
+            System.out.println("1. Plug In");
+            System.out.println("2. Plug Out");
+            System.out.println("3. Write");
+            System.out.println("4. Read");
+            System.out.println("5. Format");
+            System.out.println("6. Exit");
+            System.out.println("Select your option");
+            int choice = Integer.parseInt(buffer.readLine());
+            switch(choice){
+                case 1:
+                    System.out.println("Enter device id");
+                    int deviceId = Integer.parseInt(buffer.readLine());
+                    if(user.checkDevice(deviceId)){
+                        Computer device = user.getDevice(id);
+                        removableDevice.plugIn(device);
+                    }
+                    else{
+                        System.out.println("No such Device exists");
+                    }
+                    break;
+
+                case 2:
+                    removableDevice.plugOut();
+                    break;
+
+                case 3:
+                    System.out.println("Enter data to be stored");
+                    String data = buffer.readLine();
+                    removableDevice.save(data);
+                    break;
+
+                case 4:
+                    removableDevice.showData();
+                    break;
+
+                case 5:
+                    removableDevice.format();
+                    break;
+
+                case 6:
+                    break;
+
+                default:
+                    System.out.println("Enter a valid choice");
+            }
+            if(choice == 6){
+                break;
+            }
+        }
+    }
+
+    public static void showDeviceMenu(User user,int id) throws IOException{
         Computer device = user.getDevice(id);
         while(true){
             System.out.println("1. Turn on/off");
@@ -149,11 +223,13 @@ public class MainDriver {
                     break;
 
                 case 4:
-
+                    device.getContent();
                     break;
 
                 case 5:
-
+                    System.out.println("Enter data to be stored");
+                    String data = buffer.readLine();
+                    device.save(data);
                     break;
 
                 case 6:

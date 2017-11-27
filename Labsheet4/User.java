@@ -35,9 +35,18 @@ public class User {
     }
 
     public Computer getDevice(int id){
-        for(Computer computer : this.computers){
+        for(Computer computer : computers){
             if(computer.getId() == id){
                 return computer;
+            }
+        }
+        return null;
+    }
+
+    public RemovableDevice getStorageDevice(int id){
+        for(RemovableDevice device : removableDevices){
+            if(device.getId() == id){
+                return device;
             }
         }
         return null;
@@ -91,6 +100,20 @@ public class User {
             }
         }
         return true;
+    }
+
+    public void addStorage(int type,int capacity){
+        if(type == 1){
+            USB usb = new USB(capacity);
+            removableDevices.add(usb);
+            System.out.println("Device id " + usb.getId());
+        }
+        else{
+            ExternalHDD externalHDD = new ExternalHDD(capacity);
+            removableDevices.add(externalHDD);
+            System.out.println("Device id " + externalHDD.getId());
+        }
+        System.out.println("Device Added");
     }
 
     public int getId(){

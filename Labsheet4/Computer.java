@@ -18,6 +18,17 @@ public class Computer {
         System.out.println("The id given to the device is " + this.id);
     }
 
+    public void save(String text) {
+        storage.save(text);
+        System.out.println("Data Saved");
+    }
+
+    public void getContent(){
+        storage.showData();
+    }
+
+
+
     public int calculateId(){
         while(true){
             Random random = new Random();
@@ -25,7 +36,8 @@ public class Computer {
             if(checkId(id)){
                 return id;
             }
-            else{
+            else
+            {
                 continue;
             }
         }
